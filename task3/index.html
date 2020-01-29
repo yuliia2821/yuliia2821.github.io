@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Users</title>
+<meta charset="utf-8" />
+<style>
+a:hover{cursor:pointer;}
+</style>
+</head>
+<body>
+<div id="app">
+    <table>
+      <tr>
+        <td><a @click="sortParam='no'">№</a></td>
+        <td><a @click="sortParam='name'">Name</a></td>
+        <td><a @click="sortParam='email'">E-mail</a></td>
+        <td><a @click="sortParam='age'">Age</a></td></tr>
+      <tr v-for="user in sortedList">
+        <td>{{user.no}}</td>
+        <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.age}}</td>
+    </table>
+</div>
+<script src="https://unpkg.com/vue"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            sortParam: '',
+            users: [
+                {no: 1, name:'Artem', email: 'artem@ukr.net', age: 30},
+                {no: 2, name:'Yuliia', email: 'yulia95@ukr.net', age: 25}, 
+                {no: 3, name:'Tanya', email: 't56@ukr.net', age: 35},
+                {no: 4, name:'Oleg', email: 'oleg76@ukr.net', age: 28},
+                {no: 5, name:'Max', email: 'aliev_max@gmail.com', age: 37}]
+        },
+        computed:{
+            sortedList () {
+                switch(this.sortParam){
+                    case 'no': return this.users.sort(sortByNo);
+                    case 'name': return this.users.sort(sortByName);
+                    case 'email': return this.users.sort(sortByEmail);
+                    case 'age': return this.users.sort(sortByAge);
+                    default: return this.users
+                }
+             }
+        }
+    });
+var sortByNo = function (d1, d2) {
+    return (d1.no > d2.no) ? 1 : -1;};
+var sortByName = function (d1, d2) { 
+    return (d1.name.toLowerCase() > d2.name.toLowerCase()) ? 1 : -1; };
+var sortByEmail = function (d1, d2) { 
+    return (d1.email > d2.email) ? 1 : -1; };
+var sortByAge = function (d1, d2) { return (d1.age > d2.age) ? 1 : -1; };
+</script>
+</body>
+</html>
